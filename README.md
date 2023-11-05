@@ -1,4 +1,4 @@
-# Creando codigo con Moisés
+# DevStylish
 
 Esta web/portfolio ha sido desarrollada con Astro 3, puedes usarla sin ningún problema.
 
@@ -26,4 +26,4 @@ Lee [la documentación de Astro](https://docs.astro.build) o puedes consultarme 
 
 ## Creditos
 
-Este tema ha sido sacado de Astro 3 y está basado en la web de [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Este tema ha sido sacado de la web de Astro 3 y está basado en la web de [Bear Blog](https://github.com/HermanMartinus/bearblog/).
