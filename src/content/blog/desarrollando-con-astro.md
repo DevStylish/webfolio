@@ -19,7 +19,7 @@ un modelo mediante el archivo MD!
 
 ### ¿Porque un "webfolio" y no un simple portfolio o una web?
 Empecé con esta idea para resolver las tipicas preguntas que me realizan cada vez que me llega una oferta: _**¿Qué tecnologías trabajas o sabes?**_ 
-_**¿Qué tiempo de experiencia con X tecnologia?**_ _**¿Qué tipo de problemas resuelves y con que complejidad?**_...
+_**¿Qué tiempo de experiencia tienes con X tecnologia?**_ _**¿Qué tipo de problemas resuelves y con que complejidad?**_...
 
 Por supuesto, esto no es para que no me hagan estas preguntas, por supuesto, las respondo con muchisimo gusto, ya que es mi trabajo
 y el cual adoro con toda mi alma, pero ¿y si ahorramos tiempo en estas preguntas que te puedo responder y me haces otras que te interesen más?
