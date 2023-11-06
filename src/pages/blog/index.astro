@@ -9,10 +9,35 @@ import FormattedDate from '../../components/FormattedDate.astro';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
+
+const buttonClass = (buttonTag: string) : string => {
+	const classBtn = 'ml-1 btn btn-primary '
+	let finalClass: string = classBtn
+
+	switch (buttonTag){
+			case 'C#':
+				finalClass += 'c-sharp'
+				break
+			case 'Java':
+				finalClass += 'java'
+				break
+			case 'JavaScript':
+				finalClass += 'javascript'
+				break
+			case 'Angular':
+				finalClass += 'angular'
+				break
+			case 'Astro':
+				finalClass += 'astro'
+				break
+		}
+
+	return finalClass
+};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
@@ -61,6 +86,9 @@ const posts = (await getCollection('blog')).sort(
 				margin: 0;
 				color: rgb(var(--gray));
 			}
+			.description{
+				color: rgb(var(--gray));
+			}
 			ul li a:hover h4,
 			ul li a:hover .date {
 				color: rgb(var(--accent));
@@ -83,6 +111,59 @@ const posts = (await getCollection('blog')).sort(
 					font-size: 1.563em;
 				}
 			}
+
+			/* CSS Personalizados de Bootstrap */
+
+			.c-sharp {
+				background-color: mediumpurple;
+				border-color: mediumpurple;
+			}
+
+			.c-sharp:not(:disabled):not(.disable):active{
+				background-color: mediumpurple;
+				border-color: mediumpurple;
+			}
+
+			.java {
+				background-color: orangered;
+				border-color: orangered;
+			}
+
+			.java:not(:disabled):not(.disable):active{
+				background-color: orangered;
+				border-color: orangered;
+			}
+
+			.javascript {
+				background-color: orange;
+				border-color: orange;
+			}
+
+			.javascript:not(:disabled):not(.disable):active{
+				background-color: orange;
+				border-color: orange;
+			}
+
+			.angular {
+				background-color: crimson;
+				border-color: crimson;
+			}
+
+			.angular:not(:disabled):not(.disable):active{
+				background-color: crimson;
+				border-color: crimson;
+			}
+
+			.astro {
+				background-color: darkviolet;
+				border-color: darkviolet;
+			}
+
+			.astro:not(:disabled):not(.disable):active{
+				background-color: darkviolet;
+				border-color: darkviolet;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -91,17 +172,24 @@ const posts = (await getCollection('blog')).sort(
 			<section>
 				<ul>
 					{
-						posts.map((post) => (
+						posts.map((post, index) => (
 							<li>
+								<h2>{index === posts.length - 1 ? "Última publicación" : ""}</h2>
 								<a href={`/blog/${post.slug}/`}>
 									<img width={720} height={360} src={post.data.heroImage} alt="" />
 									<h4 class="title">{post.data.title}</h4>
+									<h6 class="description">{post.data.description}</h6>
+									{
+										post.data.postTags?.map((tec) => {
+											return <button class={buttonClass(tec)}>{tec}</button>
+										})
+									}
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
 									</p>
 								</a>
 							</li>
-						))
+						)).reverse()
 					}
 				</ul>
 			</section>

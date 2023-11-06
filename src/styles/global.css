@@ -15,6 +15,19 @@
 	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
 		0 16px 32px rgba(var(--gray), 33%);
 }
+
+[data-bs-theme=dark] .element {
+	color: var(--bs-primary-text-emphasis);
+	background-color: var(--bs-primary-bg-subtle);
+}
+
+@media (prefers-color-scheme: dark) {
+	.element {
+	  color: var(--bs-primary-text-emphasis);
+	  background-color: var(--bs-primary-bg-subtle);
+	}
+}
+
 @font-face {
 	font-family: 'Atkinson';
 	src: url('/fonts/atkinson-regular.woff') format('woff');
