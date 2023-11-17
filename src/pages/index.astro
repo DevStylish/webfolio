@@ -11,7 +11,17 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
       .h1-responsive {
-        font-size: 5vh;
+        font-size: 4.8vh;
+      }
+      @media (max-width: 767px) {
+        .h1-responsive {
+          font-size: 4vh;
+        }
+      }
+      @media (max-width: 720px) {
+        .h1-responsive {
+          font-size: 5vh;
+        }
       }
     </style>
   </head>
