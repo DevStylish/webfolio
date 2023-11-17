@@ -1,48 +1,54 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 ---
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<style>
-		.centro {
-			text-align: center;
-		}
-	</style>
-	<body>
-		<Header title={SITE_TITLE} />
-		<main>
-			<h1 class="centro">🎊¡Bienvenid@ a mi webfolio!🎊</h1>
-			<p>
-				Seguramente te estes preguntando que es un "webfolio", muy facil, es la mezcla entre
-				una web y un portfolio.
-			</p>
-			<p>
-				<i>¿Pero no seria lo mismo que un portfolio?</i>
-			</p>
-			<p>
-				Podría serlo, pero me planteé la siguiente pregunta: <i>¿en que portfolio se suele escribir sobre 
-				los aprendizajes que ha ido obteniendo?</i> Por lo que conozco y visto en otros portfolios
-				no es común compartir los conocimientos o experiencias en un portfolio, mi idea, no era solamente
-				solamente hacer un portfolio, tambien mostrar mi formación como un desarrollador "todoterreno" (o fullstack), 
-				y tambien usar esta web como un bloc de apuntes para cualquiera que lo necesitase.
-			</p>
-			<p>
-				Antes de que lo preguntes, en plataformas de videojuegos como Steam, Epic Games u otras suelo
-				usar el nick "Stylish" (Elegante, en inglés), como soy desarrollador, le puse por delante
-				"Dev", ahí el nick que uso como desarrollador: "DevStylish", asi que ya sabes el origen del
-				nombre de la web💡
-			</p>
-			<p>
-				Poco a poco irá incrementando todos los apartados de la web e irán perfeccionando con el tiempo.
-			</p>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      .h1-responsive {
+        font-size: 5vh;
+      }
+    </style>
+  </head>
+
+  <body>
+    <Header title={SITE_TITLE} />
+    <main class="m-0-ml">
+      <h1 class="text-center h1-responsive">🎊¡Bienvenid@ a mi webfolio!🎊</h1>
+      <p>
+        Seguramente te estes preguntando que es un "webfolio", muy facil, es la
+        mezcla entre una web y un portfolio.
+      </p>
+      <p>
+        <i>¿Pero no seria lo mismo que un portfolio?</i>
+      </p>
+      <p>
+        Podría serlo, pero me planteé la siguiente pregunta: <i
+          >¿en que portfolio se suele escribir sobre los aprendizajes que ha ido
+          obteniendo?</i
+        > Por lo que conozco y visto en otros portfolios no es común compartir
+        los conocimientos o experiencias en un portfolio, mi idea, no era
+        solamente solamente hacer un portfolio, tambien mostrar mi formación
+        como un desarrollador "todoterreno" (o fullstack), y tambien usar esta
+        web como un bloc de apuntes para cualquiera que lo necesitase.
+      </p>
+      <p>
+        Antes de que lo preguntes, en plataformas de videojuegos como Steam,
+        Epic Games u otras suelo usar el nick "Stylish" (Elegante, en inglés),
+        como soy desarrollador, le puse por delante "Dev", ahí el nick que uso
+        como desarrollador: "DevStylish", asi que ya sabes el origen del nombre
+        de la web💡
+      </p>
+      <p>
+        Poco a poco irá incrementando todos los apartados de la web e irán
+        perfeccionando con el tiempo.
+      </p>
+    </main>
+    <Footer />
+  </body>
 </html>
