@@ -30,6 +30,12 @@ const buttonClass = (buttonTag: string) : string => {
 			case 'Astro':
 				finalClass += 'astro'
 				break
+			case 'Opinion Personal':
+				finalClass += 'personal'
+				break
+			case 'Kotlin':
+				finalClass += 'kotlin'
+				break
 		}
 
 	return finalClass
@@ -162,6 +168,26 @@ const buttonClass = (buttonTag: string) : string => {
 			.astro:not(:disabled):not(.disable):active{
 				background-color: darkviolet;
 				border-color: darkviolet;
+			}
+
+			.personal {
+				background-color: grey;
+				border-color: grey;
+			}
+
+			.personal:not(:disabled):not(.disable):active{
+				background-color: grey;
+				border-color: grey;
+			}
+
+			.kotlin {
+				background-color: violet;
+				border-color: violet;
+			}
+
+			.kotlin:not(:disabled):not(.disable):active{
+				background-color: violet;
+				border-color: violet;
 			}
 
 		</style>

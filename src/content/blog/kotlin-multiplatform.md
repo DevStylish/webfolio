@@ -1,15 +1,28 @@
 ---
-title: "Desarrollando con Astro 3"
-description: "¿Como es diseñar una web con Astro 3?"
-pubDate: "Nov 06 2023"
+title: "Kotlin Multiplatform"
+description: "El futuro del desarrollo movil, web y escritorio"
+pubDate: "Sept 10 2024"
 heroImage: "/blog-placeholder-1.jpg"
-postTags: ["Astro", "JavaScript"]
+postTags: ["Kotlin"]
 ---
 
-## El comienzo de mi nueva aventura
+## ¿Qué es Kotlin y Kotlin Multiplatform?
 
-Este es mi primer post y tambien el primero acerca de Astro 3, la verdad es que llevo desde
-Septiembre trabajando con Astro 3, y ha sido toda una experiencia muy rica en desarrollo.
+Para entender Kotlin, tenemos que remontarnos a sus creadores, **JetBrains**. Es posible
+que muchos os suene o los conozcais, ya que son los desarrolladores de los IDEs
+más usados actualmente y que, bajo mi punto de vista, es de los más potentes para
+desarrollar y mejores optimizados, como son IntellIJ, WebStorm, PHPStorm, etc.
+
+**Kotlin**(meter enlace a Wikipedia) nace ante las necesidades de la empresa de un lenguaje que cumpla con las características que ellos buscaban, además, dieron una respuesta ante uno de los debates más repetidos en el mundo del desarrollo:
+**_¿Lenguaje tipado o no tipado?_** Para algunos, como es mi caso, puede parecernos un debate un poco 
+absurdo, ya que ambos tienen sus ventajas y desventajas, pero para otros esto implica una comodidad a la 
+hora de desarrollar; para Jetbrains, esto era algo bastante importante. El líder de JetBrains, Dmitry Jemerov(meter enlace de Wikipedia), dijo 
+que la mayoría de lenguajes no tienen las características que buscaban, con la excepción de _Scala_. Sin embargo, 
+citó el lento tiempo de compilación de Scala como una deficiencia obvia. Uno de los objetivos establecidos de 
+Kotlin es el de compilar tan rápido como _Java_.
+
+Para resumir a Kotlin en pocas palabras, podríamos definirlo como: _un popurrí muy selectivo de todas las
+ventajas de cada lenguaje_.
 
 ### ¿Como descubro Astro 3?
 
