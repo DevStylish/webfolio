@@ -4,57 +4,304 @@ import Layout from '../layouts/BlogPost.astro';
 
 <Layout
 	title="Sobre mí"
-	description="¿Quieres saber más acerca de mí? Aquí tienes lo necesario"
+	description="Ingeniero de Software con más de 4 años de experiencia en Java y APIs REST. Experiencia en NTT DATA (CaixaBank), Oxigent, Guadaltel y más."
 	pubDate={new Date('September 17 2023')}
 	heroImage="/foto_perfil.jpg"
 >
 
-	<h1>¿Como profesional?👨🏻‍💻</h1>
+	<style>
+		.about-stats {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1em;
+			margin: 1.5em 0 2em 0;
+		}
+		.stat {
+			background: rgba(var(--gray-light), 0.55);
+			border: 1px solid rgb(var(--gray-light));
+			border-radius: 14px;
+			padding: 1em 0.5em;
+			text-align: center;
+		}
+		.stat strong {
+			display: block;
+			font-size: 1.9em;
+			line-height: 1.1;
+			color: var(--accent);
+		}
+		.stat span {
+			font-size: 0.85em;
+			color: rgb(var(--gray));
+		}
+		.timeline {
+			margin: 1em 0 0 0;
+			padding: 0 0 0 1.4em;
+			border-left: 2px solid rgb(var(--gray-light));
+		}
+		.job {
+			position: relative;
+			margin: 0 0 1.4em 0;
+			padding: 1em 1.1em;
+			background: rgba(var(--gray-light), 0.35);
+			border: 1px solid rgb(var(--gray-light));
+			border-radius: 14px;
+		}
+		.job::before {
+			content: '';
+			position: absolute;
+			left: calc(-1.4em - 7px);
+			top: 1.3em;
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			background: var(--accent);
+			box-shadow: 0 0 0 4px rgba(var(--gray-light), 0.6);
+		}
+		.job-current::before {
+			background: #22c55e;
+		}
+		.job h3 {
+			margin: 0 0 0.15em 0;
+		}
+		.job-period {
+			display: inline-block;
+			font-size: 0.8em;
+			font-style: normal;
+			padding: 0.15em 0.7em;
+			margin-bottom: 0.6em;
+			border-radius: 999px;
+			background: rgba(var(--gray), 0.15);
+			color: rgb(var(--gray-dark));
+		}
+		.badge-now {
+			display: inline-block;
+			font-size: 0.75em;
+			font-weight: 700;
+			padding: 0.15em 0.7em;
+			margin-left: 0.5em;
+			border-radius: 999px;
+			background: #22c55e;
+			color: #fff;
+			vertical-align: middle;
+		}
+		.tag {
+			display: inline-block;
+			padding: 0.15em 0.65em;
+			margin: 0.15em 0.2em 0.15em 0;
+			border-radius: 999px;
+			background: rgba(var(--gray), 0.15);
+			font-size: 0.8em;
+			white-space: nowrap;
+		}
+		.cards {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1em;
+			margin: 1em 0;
+		}
+		.card {
+			padding: 1em 1.1em;
+			background: rgba(var(--gray-light), 0.35);
+			border: 1px solid rgb(var(--gray-light));
+			border-radius: 14px;
+		}
+		.card h3 {
+			margin: 0 0 0.3em 0;
+			font-size: 1.1em;
+		}
+		.card p {
+			margin: 0.3em 0;
+			font-size: 0.9em;
+		}
+		.card .card-link {
+			font-size: 0.9em;
+			font-weight: 700;
+		}
+		.skill-group {
+			margin-bottom: 0.9em;
+		}
+		.skill-group strong {
+			display: block;
+			margin-bottom: 0.3em;
+		}
+		@media (max-width: 720px) {
+			.about-stats {
+				grid-template-columns: 1fr;
+			}
+			.cards {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+
+	<h2>Acerca de mí 👨🏻‍💻</h2>
 	<p>
-		Me considero una persona muy trabajadora, responsable, curiosa y muy autodidacta lo que impulsa mi
-		carácter proactivo, si me preguntas por mis proyectos personales... Siempre tengo algo entre manos,
-		desde una idea para aplicación de escritorio o móvil, hasta esta misma web o incluso un videojuego. 
-		¿Motivo de porque hago tantas cosas o porque investigo tanto? Se podria destacar el hecho de haber 
-		estado rodeado siempre de la tecnología desde que tengo consciencia hace que mi curiosidad y mi necesidad
-		por crear soluciones se vea muy motivada a seguir creciendo.
+		Soy <strong>Ingeniero de Software</strong> con más de 4 años de experiencia desarrollando
+		aplicaciones empresariales y servicios backend basados en <strong>Java</strong>. Estoy especializado
+		en diseño e implementación de <strong>APIs REST</strong>, modernización de aplicaciones legacy,
+		integración de sistemas y resolución de incidencias en entornos críticos.
 	</p>
 
-	<h1>¿Como persona?🧑🏻</h1>
+	<div class="about-stats">
+		<div class="stat"><strong>+5</strong><span>años trabajando</span></div>
+		<div class="stat"><strong>6</strong><span>empresas</span></div>
+		<div class="stat"><strong>30+</strong><span>tecnologías</span></div>
+	</div>
+
 	<p>
-		Además de lo mencionado anteriormente, soy una persona totalmente apasionada por el mundo y lo que lo
-		rodea, si paseo por la calle, siempre necesito de mis cascos para acompañarlo con algo de música; la
-		actividad física y mental tambien es importante para mi, por eso mis grandes aficiones son el baloncesto,
-		los juegos de mesa, los videojuegos (los cuales complemento haciendo directos en Twitch), programar y dar 
-		solucion a problemas que planteo. Por lo que siempre necesito ser proactivo💡.
+		Trabajo en equipos ágiles, colaborando con negocio y producto para transformar requisitos funcionales
+		en soluciones técnicas escalables y mantenibles. Actualmente desempeño funciones de
+		<strong>coordinación técnica y liderazgo de equipo</strong> en proyectos estratégicos para CaixaBank.
 	</p>
 
-	<h1>¿Que cursos he realizado?📝</h1>
+	<h2>Experiencia laboral 💼</h2>
+	<div class="timeline">
+		<div class="job job-current">
+			<h3>Software Engineer — NTT DATA <span class="badge-now">Actual</span></h3>
+			<span class="job-period">Ene 2025 — Actualidad · Sevilla · Cliente: CaixaBank Architecture</span>
+			<ul>
+				<li>Evolución de servicios backend para aplicaciones bancarias críticas con <strong>Java 11</strong> y <strong>APIs REST</strong>.</li>
+				<li>Integraciones entre sistemas con altos estándares de seguridad, trazabilidad y disponibilidad.</li>
+				<li>Coordinación de tareas y apoyo técnico a otros desarrolladores (rol cercano a <strong>Team Lead</strong>), guardias 24/7.</li>
+			</ul>
+			<div>
+				<span class="tag">Java 11</span><span class="tag">REST</span><span class="tag">MapStruct</span><span class="tag">Swagger</span><span class="tag">Jenkins</span><span class="tag">Kibana</span><span class="tag">Devo</span>
+			</div>
+		</div>
+
+		<div class="job">
+			<h3>Desarrollador Fullstack — Oxigent</h3>
+			<span class="job-period">Nov 2023 — Nov 2024</span>
+			<ul>
+				<li>Apps web con <strong>Java EE 11 / Jakarta EE</strong>, <strong>Spring Boot</strong> y front <strong>JSF / PrimeFaces / Bootstrap</strong>.</li>
+				<li>Persistencia <strong>Hibernate/JPA</strong>, <strong>PL/SQL en Oracle</strong>, batch y JasperReports.</li>
+				<li>Migración de legacy <strong>Struts 1.2.2 → PrimeFaces</strong> sobre Java 11.</li>
+			</ul>
+			<div>
+				<span class="tag">Java EE 11</span><span class="tag">Spring Boot</span><span class="tag">JSF</span><span class="tag">PrimeFaces</span><span class="tag">Hibernate</span><span class="tag">Oracle</span><span class="tag">Maven</span><span class="tag">Jira</span>
+			</div>
+		</div>
+
+		<div class="job">
+			<h3>Desarrollador Fullstack — Guadaltel, S.A.</h3>
+			<span class="job-period">Mar 2022 — Nov 2023 · Sevilla · Licitación electrónica (Trew@)</span>
+			<ul>
+				<li>Apps con <strong>Java EE 8/11</strong>, Spring y front JSF/PrimeFaces/RichFaces.</li>
+				<li><strong>Oracle, PostgreSQL y SQL Server</strong>; plantillas con JOOScript (Freemarker).</li>
+				<li>Despliegues en <strong>Tomcat</strong>, <strong>Docker</strong> y CI/CD con <strong>Jenkins</strong>.</li>
+			</ul>
+			<div>
+				<span class="tag">Java EE</span><span class="tag">Spring</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span><span class="tag">Jenkins</span><span class="tag">Tomcat</span>
+			</div>
+		</div>
+
+		<div class="job">
+			<h3>Programador Junior — Media Interactiva</h3>
+			<span class="job-period">Mar 2021 — Jun 2021 · Tomares</span>
+			<ul>
+				<li>Mantenimiento en <strong>C#, JavaScript y HTML5</strong>; depuración en <strong>ASP.NET</strong>.</li>
+				<li>Interfaces con <strong>Angular</strong> y <strong>SQL Server</strong>.</li>
+			</ul>
+			<div>
+				<span class="tag">C#</span><span class="tag">ASP.NET</span><span class="tag">Angular</span><span class="tag">SQL Server</span>
+			</div>
+		</div>
+
+		<div class="job">
+			<h3>Técnico informático — Voxpro / Telus (Cork, Irlanda)</h3>
+			<span class="job-period">Jun 2019 — Sep 2019</span>
+			<ul>
+				<li>Soporte a dispositivos <strong>Google (Chromebox)</strong>, redes y puesta en marcha de departamentos.</li>
+			</ul>
+		</div>
+
+		<div class="job">
+			<h3>Técnico informático — Ayuntamiento de Los Palacios</h3>
+			<span class="job-period">Mar 2019 — Jun 2019</span>
+			<ul>
+				<li>Reparación de equipos, soporte de software y redes municipales.</li>
+			</ul>
+		</div>
+	</div>
+
+	<h2>Formación 📝</h2>
+	<div class="cards">
+		<div class="card">
+			<h3>🎓 OpenWebinars</h3>
+			<p>2022 — Actualidad · E-learning tecnológico</p>
+			<p><a class="card-link" href="https://openwebinars.net/" target="_blank" rel="noopener">openwebinars.net →</a></p>
+		</div>
+		<div class="card">
+			<h3>🔒 Especialización en Ciberseguridad</h3>
+			<p>IES Martínez Montañés, Sevilla · 2022 — 2023</p>
+		</div>
+		<div class="card">
+			<h3>🌐 DAW — Desarrollo de Aplicaciones Web</h3>
+			<p>IES Martínez Montañés, Sevilla · 2021 — 2022</p>
+		</div>
+		<div class="card">
+			<h3>📱 DAM — Desarrollo Multiplataforma</h3>
+			<p>IES Punta del Verde, Sevilla · 2019 — 2021</p>
+		</div>
+		<div class="card">
+			<h3>🖧 SMR — Sistemas Microinformáticos y Redes</h3>
+			<p>IES Al-Mudeyne, Los Palacios · 2017 — 2019</p>
+		</div>
+		<div class="card">
+			<h3>🗣️ Idiomas</h3>
+			<p>Español (nativo) · Inglés B1</p>
+		</div>
+	</div>
+
+	<h2>Capacidades 🛠️</h2>
+	<div class="skill-group">
+		<strong>Backend & APIs</strong>
+		<div><span class="tag">Java 11</span><span class="tag">Spring Boot</span><span class="tag">Spring MVC</span><span class="tag">Jakarta EE</span><span class="tag">Hibernate</span><span class="tag">JPA</span><span class="tag">REST APIs</span><span class="tag">MapStruct</span><span class="tag">Swagger / OpenAPI</span><span class="tag">Microservicios</span><span class="tag">Struts 1.x</span></div>
+	</div>
+	<div class="skill-group">
+		<strong>Bases de datos</strong>
+		<div><span class="tag">Oracle (PL/SQL)</span><span class="tag">SQL Server</span><span class="tag">MongoDB</span><span class="tag">PostgreSQL</span></div>
+	</div>
+	<div class="skill-group">
+		<strong>DevOps & observabilidad</strong>
+		<div><span class="tag">Jenkins</span><span class="tag">Docker</span><span class="tag">Maven</span><span class="tag">Git</span><span class="tag">Bitbucket</span><span class="tag">Kibana</span><span class="tag">Devo</span><span class="tag">JQM (batch)</span><span class="tag">Certificados digitales</span></div>
+	</div>
+	<div class="skill-group">
+		<strong>Frontend & reporting</strong>
+		<div><span class="tag">JavaScript</span><span class="tag">Angular</span><span class="tag">JSF</span><span class="tag">PrimeFaces</span><span class="tag">RichFaces</span><span class="tag">Bootstrap</span><span class="tag">JasperReports</span></div>
+	</div>
+	<div class="skill-group">
+		<strong>Metodologías & gestión</strong>
+		<div><span class="tag">Scrum</span><span class="tag">Agile</span><span class="tag">CI/CD</span><span class="tag">Code Review</span><span class="tag">Jira</span></div>
+	</div>
+
+	<h2>Proyectos personales 💻</h2>
+	<div class="cards">
+		<div class="card">
+			<h3>🌐 Portfolio / Web personal</h3>
+			<p>2023 — Actualidad · Esta web, hecha con <strong>Astro 3</strong>.</p>
+			<p><a class="card-link" href="https://github.com/DevStylish/webfolio" target="_blank" rel="noopener">Ver en GitHub →</a></p>
+		</div>
+		<div class="card">
+			<h3>🎓 TFG — App para profesores y alumnos</h3>
+			<p>2022 · Tipo Moodle: <strong>Angular</strong> + <strong>Express</strong> + <strong>MongoDB</strong>.</p>
+			<p><a class="card-link" href="https://github.com/DevStylish/organised-lifestyle" target="_blank" rel="noopener">Ver en GitHub →</a></p>
+		</div>
+	</div>
+
+	<h2>Como persona 🧑🏻</h2>
 	<p>
-		Desde muy pequeño tenia claro que mi objetivo era trabajar en el sector informática, tras finalizar la ESO empecé 
-		con el CFGM de Sistemas Microinformáticos y Redes (SMR), donde aprendí como funcionaba un ordenador,
-		un servidor, los sistemas operativos y los diversos programas que podria llegar a utilizar algún dia, sumado a mi
-		descubriento de la programación mediante scripts de Windows, Linux y tambien la programación web. Tras finalizar los estudios
-		y realizar un Erasmus con motivo de continuar mi aprendizaje y mejorar mi inglés, decidí continuar mis
-		estudios realizando el CFGS de Desarrollo de Aplicaciones Multiplataformas (DAM) y tras esto, rematar al
-		año siguiente esta rama, realicé el CFGS de Desarrollo de Aplicaciones Web (DAW) realizando tambien muchos 
-		cursos de la plataforma de OpenWebinars, y finalizando este año con un Curso de Especialización en 
-		Ciberseguridad. Son muchos, asi que si te pierdes un poco, puedes verlos todos en mi 
-		<a href="https://www.linkedin.com/in/moisés-martín-pérez-601430189/">LinkedIn</a>.
+		Apasionado de la tecnología desde que tengo consciencia: siempre tengo algo entre manos, desde una
+		app de escritorio o móvil hasta un videojuego. Fuera del teclado me verás con música en los cascos,
+		jugando al baloncesto, con juegos de mesa o videojuegos (que complemento con directos en Twitch).
+		Trabajador, responsable, curioso y autodidacta💡.
 	</p>
 
-	<h1>¿Proyectos personales?💻</h1>
-	<p class="texto-lista">
-		Muchos (fijate en esta página, sigue creciendo😱), actualmente me encuentro:
-		<ul>
-			<li>Desarrollando una red social junto con otro desarrollador (con las tecnologias: Expo, Express y MongoDB)</li>
-			<li>Aprendiendo a desarrollar mi webfolio con Astro 3.</li>
-			<li>Aprendiendo a usar Godot y Unreal Engine.</li>
-		</ul>
-	</p>
-
-	<h1>¿Algo más?</h1>
+	<h2>¿Algo más?</h2>
 	<p>
-		Bueno, si necesitas saber cualquier cosa, puedes contactarme por cualquiera de las redes que te 
-		dejo. Ya sea por ofrecer alguna oferta laboral, consejo o duda, podemos hablar sin ningún problema😉.
+		Si quieres saber más, tienes todo el detalle en mi
+		<a href="https://www.linkedin.com/in/mois%C3%A9s-mart%C3%ADn-p%C3%A9rez-601430189/" target="_blank" rel="noopener">LinkedIn</a>.
+		Y si necesitas cualquier cosa —oferta laboral, consejo o duda— contáctame por cualquiera de las redes
+		que dejo en la web. ¡Hablamos sin problema!😉
 	</p>
 </Layout>

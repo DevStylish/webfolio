@@ -12,7 +12,30 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
 <html lang="es">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead
+      title={title}
+      description={description}
+      image={heroImage}
+      type="article"
+      pubDate={pubDate}
+      updatedDate={updatedDate}
+    />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: title,
+      description: description,
+      image: heroImage ? new URL(heroImage, Astro.site).toString() : undefined,
+      datePublished: pubDate?.toISOString(),
+      dateModified: updatedDate?.toISOString() ?? pubDate?.toISOString(),
+      author: {
+        '@type': 'Person',
+        name: 'Moisés Martín Pérez',
+        url: 'https://www.linkedin.com/in/moisés-martín-pérez-601430189/',
+      },
+      mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).toString(),
+      inLanguage: 'es',
+    })} />
     <style>
       main {
         width: calc(100% - 2em);
@@ -96,7 +119,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     <main>
       <article>
         <div class="hero-image">
-          {heroImage && <img width={210} height={210} src={heroImage} alt="" />}
+          {heroImage && <img width={720} height={360} src={heroImage} alt={title} fetchpriority="high" />}
         </div>
         <div class="prose">
           <div class="title">

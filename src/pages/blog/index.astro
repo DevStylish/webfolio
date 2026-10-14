@@ -7,219 +7,536 @@ import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-const buttonClass = (buttonTag: string) : string => {
-	const classBtn = 'ml-1 btn btn-primary '
-	let finalClass: string = classBtn
+const [featured, ...rest] = posts;
+const allTags = [...new Set(posts.flatMap((p) => p.data.postTags ?? []))].sort();
 
-	switch (buttonTag){
-			case 'C#':
-				finalClass += 'c-sharp'
-				break
-			case 'Java':
-				finalClass += 'java'
-				break
-			case 'JavaScript':
-				finalClass += 'javascript'
-				break
-			case 'Angular':
-				finalClass += 'angular'
-				break
-			case 'Astro':
-				finalClass += 'astro'
-				break
-			case 'Opinion Personal':
-				finalClass += 'personal'
-				break
-			case 'Kotlin':
-				finalClass += 'kotlin'
-				break
-		}
-
-	return finalClass
+const tagColor = (tag: string): string => {
+	switch (tag) {
+		case 'C#': return 'c-sharp';
+		case 'Java': return 'java';
+		case 'JavaScript': return 'javascript';
+		case 'Angular': return 'angular';
+		case 'Astro': return 'astro';
+		case 'Opinion Personal': return 'personal';
+		case 'Kotlin': return 'kotlin';
+		default: return 'default-tag';
+	}
 };
 ---
 
 <!doctype html>
 <html lang="es">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={`Blog | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 		<style>
 			main {
 				width: 960px;
 			}
-			ul {
+			.blog-hero {
+				margin-bottom: 2em;
+				padding: 2em 2em 1.6em 2em;
+				border-radius: 20px;
+				background: linear-gradient(135deg, rgba(var(--gray-light), 0.7), rgba(var(--gray-light), 0.25));
+				border: 1px solid rgb(var(--gray-light));
+			}
+			.blog-hero h1 {
+				margin: 0;
+			}
+			.blog-hero .intro {
+				color: rgb(var(--gray-dark));
+				margin: 0.6em 0 0 0;
+				max-width: 60ch;
+			}
+			.blog-hero .intro-small {
+				color: rgb(var(--gray));
+				font-size: 0.9em;
+				margin: 0.6em 0 0 0;
+				max-width: 60ch;
+			}
+			.stats {
 				display: flex;
 				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
+				gap: 0.6em;
+				margin-top: 1em;
+			}
+			.stat-pill {
+				font-size: 0.85em;
+				padding: 0.25em 0.9em;
+				border-radius: 999px;
+				background: var(--header-bg);
+				border: 1px solid rgb(var(--gray-light));
+				color: rgb(var(--gray-dark));
+			}
+			.stat-pill strong {
+				color: var(--accent);
+			}
+			.filters {
+				margin-bottom: 2em;
+			}
+			.search {
+				width: 100%;
+				box-sizing: border-box;
+				padding: 0.7em 1.1em;
+				margin-bottom: 0.9em;
+				border-radius: 999px;
+				border: 1px solid rgb(var(--gray-light));
+				background: var(--header-bg);
+				color: rgb(var(--gray-dark));
+				font-size: 1em;
+			}
+			.search::placeholder {
+				color: rgb(var(--gray));
+			}
+			.chips {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5em;
+			}
+			.chip {
+				font-size: 0.85em;
+				font-weight: 700;
+				padding: 0.35em 1em;
+				border-radius: 999px;
+				border: 1px solid rgb(var(--gray-light));
+				background: transparent;
+				color: rgb(var(--gray-dark));
+				cursor: pointer;
+				transition: all 0.15s ease;
+			}
+			.chip:hover {
+				border-color: var(--accent);
+				color: var(--accent);
+			}
+			.chip[aria-pressed='true'] {
+				background: var(--accent);
+				border-color: var(--accent);
+				color: #fff;
+			}
+			.result-count {
+				font-size: 0.9em;
+				color: rgb(var(--gray));
+				margin: 0 0 1.2em 0;
+			}
+			.featured {
+				display: block;
+				margin-bottom: 2.5em;
+				border-radius: 18px;
+				overflow: hidden;
+				background: rgba(var(--gray-light), 0.35);
+				border: 1px solid rgb(var(--gray-light));
+				text-decoration: none;
+				transition: transform 0.2s ease, box-shadow 0.2s ease;
+			}
+			.featured:hover {
+				transform: translateY(-4px);
+				box-shadow: var(--box-shadow);
+			}
+			.featured img {
+				width: 100%;
+				height: 320px;
+				object-fit: cover;
+				display: block;
+			}
+			.featured-body {
+				padding: 1.5em 1.8em;
+			}
+			.badge-latest {
+				display: inline-block;
+				font-size: 0.8em;
+				font-weight: 700;
+				padding: 0.2em 0.9em;
+				margin-bottom: 0.8em;
+				border-radius: 999px;
+				background: var(--accent);
+				color: #fff;
+			}
+			.featured-body h2 {
+				margin: 0 0 0.3em 0;
+				color: rgb(var(--black));
+				font-size: 2em;
+				line-height: 1.15;
+			}
+			.featured:hover h2 {
+				color: var(--accent);
+			}
+			.featured-body .description {
+				color: rgb(var(--gray));
+				margin: 0.4em 0 0.8em 0;
+			}
+			.grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 1.5rem;
+				list-style: none;
 				margin: 0;
 				padding: 0;
 			}
-			ul li {
-				width: calc(50% - 1rem);
+			.card {
+				border-radius: 18px;
+				overflow: hidden;
+				background: rgba(var(--gray-light), 0.35);
+				border: 1px solid rgb(var(--gray-light));
+				transition: transform 0.2s ease, box-shadow 0.2s ease;
 			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
+			.card:hover {
+				transform: translateY(-4px);
+				box-shadow: var(--box-shadow);
 			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
+			.card a {
 				display: block;
+				text-decoration: none;
+				height: 100%;
 			}
-			.title {
-				margin: 0;
+			.card-img {
+				overflow: hidden;
+			}
+			.card img {
+				width: 100%;
+				height: 200px;
+				object-fit: cover;
+				display: block;
+				transition: transform 0.3s ease;
+			}
+			.card:hover img {
+				transform: scale(1.04);
+			}
+			.card-body {
+				padding: 1.2em 1.4em 1.4em 1.4em;
+			}
+			.card-body h3 {
+				margin: 0.4em 0 0.3em 0;
 				color: rgb(var(--black));
-				line-height: 1;
+				line-height: 1.25;
+			}
+			.card:hover h3 {
+				color: var(--accent);
+			}
+			.description {
+				color: rgb(var(--gray));
+				font-size: 0.95em;
+				margin: 0 0 0.8em 0;
+			}
+			.meta {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 0.5em;
+				margin-top: 0.8em;
 			}
 			.date {
 				margin: 0;
+				font-size: 0.85em;
 				color: rgb(var(--gray));
 			}
-			.description{
+			.read-more {
+				font-size: 0.9em;
+				font-weight: 700;
+				color: var(--accent);
+				white-space: nowrap;
+			}
+			.tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.35em;
+			}
+			.tag {
+				display: inline-block;
+				font-size: 0.75em;
+				font-weight: 700;
+				padding: 0.25em 0.8em;
+				border-radius: 999px;
+				color: #fff;
+			}
+			.empty {
 				color: rgb(var(--gray));
+				text-align: center;
+				padding: 3em 1em;
+				border: 1px dashed rgb(var(--gray-light));
+				border-radius: 18px;
 			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
+			.empty button {
+				margin-top: 0.8em;
+				padding: 0.5em 1.4em;
+				border-radius: 999px;
+				border: 1px solid var(--accent);
+				background: transparent;
+				color: var(--accent);
+				font-weight: 700;
+				cursor: pointer;
 			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
+			.cta {
+				margin-top: 3em;
+				padding: 2em;
+				border-radius: 20px;
+				text-align: center;
+				background: linear-gradient(135deg, rgba(var(--gray-light), 0.7), rgba(var(--gray-light), 0.25));
+				border: 1px solid rgb(var(--gray-light));
 			}
+			.cta h2 {
+				margin: 0 0 0.4em 0;
+			}
+			.cta p {
+				color: rgb(var(--gray));
+				margin: 0 auto 1.2em auto;
+				max-width: 55ch;
+			}
+			.cta-links {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 0.7em;
+			}
+			.cta-links a {
+				padding: 0.55em 1.5em;
+				border-radius: 999px;
+				font-weight: 700;
+				text-decoration: none;
+				border: 1px solid var(--accent);
+			}
+			.cta-links a.primary {
+				background: var(--accent);
+				color: #fff;
+			}
+			.cta-links a:not(.primary) {
+				color: var(--accent);
+			}
+
+			/* Colores por tecnología */
+			.c-sharp { background-color: mediumpurple; }
+			.java { background-color: orangered; }
+			.javascript { background-color: orange; }
+			.angular { background-color: crimson; }
+			.astro { background-color: darkviolet; }
+			.personal { background-color: grey; }
+			.kotlin { background-color: violet; }
+			.default-tag { background-color: rgb(var(--gray)); }
+
 			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
+				.grid {
+					grid-template-columns: 1fr;
 				}
-				ul li {
-					width: 100%;
-					text-align: center;
+				.blog-hero {
+					padding: 1.4em;
 				}
-				ul li:first-child {
-					margin-bottom: 0;
+				.featured img {
+					height: 220px;
 				}
-				ul li:first-child .title {
-					font-size: 1.563em;
+				.featured-body h2 {
+					font-size: 1.5em;
 				}
 			}
-
-			/* CSS Personalizados de Bootstrap */
-
-			.c-sharp {
-				background-color: mediumpurple;
-				border-color: mediumpurple;
-			}
-
-			.c-sharp:not(:disabled):not(.disable):active{
-				background-color: mediumpurple;
-				border-color: mediumpurple;
-			}
-
-			.java {
-				background-color: orangered;
-				border-color: orangered;
-			}
-
-			.java:not(:disabled):not(.disable):active{
-				background-color: orangered;
-				border-color: orangered;
-			}
-
-			.javascript {
-				background-color: orange;
-				border-color: orange;
-			}
-
-			.javascript:not(:disabled):not(.disable):active{
-				background-color: orange;
-				border-color: orange;
-			}
-
-			.angular {
-				background-color: crimson;
-				border-color: crimson;
-			}
-
-			.angular:not(:disabled):not(.disable):active{
-				background-color: crimson;
-				border-color: crimson;
-			}
-
-			.astro {
-				background-color: darkviolet;
-				border-color: darkviolet;
-			}
-
-			.astro:not(:disabled):not(.disable):active{
-				background-color: darkviolet;
-				border-color: darkviolet;
-			}
-
-			.personal {
-				background-color: grey;
-				border-color: grey;
-			}
-
-			.personal:not(:disabled):not(.disable):active{
-				background-color: grey;
-				border-color: grey;
-			}
-
-			.kotlin {
-				background-color: violet;
-				border-color: violet;
-			}
-
-			.kotlin:not(:disabled):not(.disable):active{
-				background-color: violet;
-				border-color: violet;
-			}
-
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post, index) => (
-							<li>
-								<h2>{index === posts.length - 1 ? "Última publicación" : ""}</h2>
-								<a href={`/blog/${post.slug}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<h6 class="description">{post.data.description}</h6>
-									{
-										post.data.postTags?.map((tec) => {
-											return <button class={buttonClass(tec)}>{tec}</button>
-										})
-									}
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						)).reverse()
-					}
-				</ul>
+			<div class="blog-hero">
+				<h1>Blog ✍️</h1>
+				<p class="intro">
+					Aquí escribo lo que voy aprendiendo como desarrollador fullstack: desde
+					<strong>backend en Java</strong> y arquitectura bancaria hasta
+					<strong>frontend con Astro</strong>, <strong>móvil con Kotlin</strong> y
+					opiniones personales del sector. Sin humo: apuntes reales de alguien que
+					pica código a diario.
+				</p>
+				<p class="intro-small">
+					¿Nuevo por aquí? Empieza por la última publicación destacada o filtra por
+					el tema que te interese 👇
+				</p>
+				<div class="stats">
+					<span class="stat-pill"><strong>{posts.length}</strong> {posts.length === 1 ? ' publicación' : ' publicaciones'}</span>
+					<span class="stat-pill"><strong>{allTags.length}</strong> temas</span>
+					<span class="stat-pill">Escribiendo desde <strong>2023</strong></span>
+				</div>
+			</div>
+
+			<div class="filters">
+				<input
+					id="blog-search"
+					class="search"
+					type="search"
+					placeholder="🔍 Buscar por título o descripción…"
+					aria-label="Buscar publicaciones"
+				/>
+				<div class="chips" role="group" aria-label="Filtrar por tema">
+					<button class="chip" data-tag="__all" aria-pressed="true">Todos</button>
+					{allTags.map((tag) => (
+						<button class="chip" data-tag={tag} aria-pressed="false">{tag}</button>
+					))}
+				</div>
+			</div>
+
+			{featured && (
+				<a
+					id="featured-post"
+					class="featured"
+					href={`/blog/${featured.slug}/`}
+					data-tags={(featured.data.postTags ?? []).join('|').toLowerCase()}
+					data-search={`${featured.data.title} ${featured.data.description}`.toLowerCase()}
+				>
+					<img
+						width={960}
+						height={320}
+						src={featured.data.heroImage}
+						alt={featured.data.title}
+						fetchpriority="high"
+					/>
+					<div class="featured-body">
+						<span class="badge-latest">✨ Última publicación</span>
+						<h2>{featured.data.title}</h2>
+						<p class="description">{featured.data.description}</p>
+						<div class="tags">
+							{featured.data.postTags?.map((tec) => (
+								<span class={`tag ${tagColor(tec)}`}>{tec}</span>
+							))}
+						</div>
+						<div class="meta">
+							<p class="date"><FormattedDate date={featured.data.pubDate} /></p>
+							<span class="read-more">Leer →</span>
+						</div>
+					</div>
+				</a>
+			)}
+
+			<p id="result-count" class="result-count" hidden></p>
+
+			<ul id="post-grid" class="grid">
+				{rest.map((post) => (
+					<li
+						class="card"
+						data-tags={(post.data.postTags ?? []).join('|').toLowerCase()}
+						data-search={`${post.data.title} ${post.data.description}`.toLowerCase()}
+					>
+						<a href={`/blog/${post.slug}/`}>
+							<div class="card-img">
+								<img
+									width={720}
+									height={200}
+									src={post.data.heroImage}
+									alt={post.data.title}
+									loading="lazy"
+									decoding="async"
+								/>
+							</div>
+							<div class="card-body">
+								<div class="tags">
+									{post.data.postTags?.map((tec) => (
+										<span class={`tag ${tagColor(tec)}`}>{tec}</span>
+									))}
+								</div>
+								<h3>{post.data.title}</h3>
+								<p class="description">{post.data.description}</p>
+								<div class="meta">
+									<p class="date"><FormattedDate date={post.data.pubDate} /></p>
+									<span class="read-more">Leer →</span>
+								</div>
+							</div>
+						</a>
+					</li>
+				))}
+			</ul>
+
+			<div id="no-results" class="empty" hidden>
+				<p>😕 Nada por aquí con ese filtro… prueba con otro tema o búsqueda.</p>
+				<button id="reset-filters" type="button">Ver todo</button>
+			</div>
+
+			<section class="cta">
+				<h2>¿Te gusta lo que lees? 📬</h2>
+				<p>
+					Suscríbete al RSS para no perderte nada, descubre quién escribe esto
+					o echa un ojo al código de esta web.
+				</p>
+				<div class="cta-links">
+					<a class="primary" href="/rss.xml">Suscribirme por RSS</a>
+					<a href="/about">Sobre mí</a>
+					<a href="https://github.com/DevStylish/webfolio" target="_blank" rel="noopener">GitHub</a>
+				</div>
 			</section>
 		</main>
 		<Footer />
+
+		<script is:inline>
+			(function () {
+				var activeTag = '__all';
+				var query = '';
+				var search = document.getElementById('blog-search');
+				var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+				var featured = document.getElementById('featured-post');
+				var cards = Array.prototype.slice.call(document.querySelectorAll('#post-grid .card'));
+				var count = document.getElementById('result-count');
+				var empty = document.getElementById('no-results');
+				var reset = document.getElementById('reset-filters');
+
+				function matches(el) {
+					var tags = (el.getAttribute('data-tags') || '').split('|');
+					var text = el.getAttribute('data-search') || '';
+					var tagOk = activeTag === '__all' || tags.indexOf(activeTag.toLowerCase()) !== -1;
+					var queryOk = !query || text.indexOf(query) !== -1;
+					return tagOk && queryOk;
+				}
+
+				function apply() {
+					var isFiltering = activeTag !== '__all' || query !== '';
+					var visible = 0;
+
+					if (featured) {
+						// Sin filtros se muestra siempre; filtrando, solo si coincide
+						var showFeatured = !isFiltering || matches(featured);
+						featured.hidden = !showFeatured;
+						if (showFeatured) visible += 1;
+					}
+
+					cards.forEach(function (card) {
+						// Sin filtros, el grid muestra solo el resto (el destacado ya está arriba)
+						var show = isFiltering ? matches(card) : true;
+						card.hidden = !show;
+						if (show) visible += 1;
+					});
+
+					if (count) {
+						count.hidden = !isFiltering;
+						if (isFiltering) {
+							count.textContent = visible === 1
+								? '1 resultado'
+								: visible + ' resultados';
+						}
+					}
+					if (empty) empty.hidden = visible !== 0;
+				}
+
+				chips.forEach(function (chip) {
+					chip.addEventListener('click', function () {
+						activeTag = chip.getAttribute('data-tag') || '__all';
+						chips.forEach(function (c) {
+							c.setAttribute('aria-pressed', c === chip ? 'true' : 'false');
+						});
+						apply();
+					});
+				});
+
+				if (search) {
+					search.addEventListener('input', function () {
+						query = (search.value || '').trim().toLowerCase();
+						apply();
+					});
+				}
+
+				if (reset) {
+					reset.addEventListener('click', function () {
+						activeTag = '__all';
+						query = '';
+						if (search) search.value = '';
+						chips.forEach(function (c) {
+							c.setAttribute('aria-pressed', c.getAttribute('data-tag') === '__all' ? 'true' : 'false');
+						});
+						apply();
+					});
+				}
+			})();
+		</script>
 	</body>
 </html>

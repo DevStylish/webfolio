@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://devstylish.github.io/webfolio/sitemap-index.xml

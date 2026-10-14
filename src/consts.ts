@@ -3,3 +3,5 @@
 
 export const SITE_TITLE = 'DevStylish';
 export const SITE_DESCRIPTION = 'Bienvenid@ a mi web, esta es una página que usaré como blog y portfolio (además de incluir algunas cosas sobre programación u otro post friki)';
+export const SITE_AUTHOR = 'Moisés Martín Pérez (DevStylish)';
+export const SITE_LANG = 'es';
