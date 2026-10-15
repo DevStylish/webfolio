@@ -1,12 +1,12 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
 import ThemeToggle from "./ThemeToggle.astro";
-import { SITE_TITLE } from "../consts";
+import { SITE_TITLE, withBase } from "../consts";
 ---
 
 <header id="top">
   <nav>
-    <a class="brand" href="/" aria-label={`${SITE_TITLE} - Inicio`}>
+    <a class="brand" href={withBase('/')} aria-label={`${SITE_TITLE} - Inicio`}>
       <span class="logo" aria-hidden="true">DS</span>
       <span class="brand-text">
         <span class="brand-name">{SITE_TITLE}</span>
@@ -14,9 +14,9 @@ import { SITE_TITLE } from "../consts";
       </span>
     </a>
     <div class="internal-links">
-      <HeaderLink href="/">Inicio</HeaderLink>
-      <HeaderLink href="/blog">Blog</HeaderLink>
-      <HeaderLink href="/about">Sobre mí</HeaderLink>
+      <HeaderLink href={withBase('/')}>Inicio</HeaderLink>
+      <HeaderLink href={withBase('/blog')}>Blog</HeaderLink>
+      <HeaderLink href={withBase('/about')}>Sobre mí</HeaderLink>
     </div>
     <div class="actions">
       <ThemeToggle />

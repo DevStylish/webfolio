@@ -2,7 +2,7 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, withBase } from '../../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 
@@ -373,14 +373,14 @@ const tagColor = (tag: string): string => {
 				<a
 					id="featured-post"
 					class="featured"
-					href={`/blog/${featured.slug}/`}
+					href={withBase(`/blog/${featured.slug}/`)}
 					data-tags={(featured.data.postTags ?? []).join('|').toLowerCase()}
 					data-search={`${featured.data.title} ${featured.data.description}`.toLowerCase()}
 				>
 					<img
 						width={960}
 						height={320}
-						src={featured.data.heroImage}
+						src={withBase(featured.data.heroImage ?? '/blog-placeholder-1.jpg')}
 						alt={featured.data.title}
 						fetchpriority="high"
 					/>
@@ -410,12 +410,12 @@ const tagColor = (tag: string): string => {
 						data-tags={(post.data.postTags ?? []).join('|').toLowerCase()}
 						data-search={`${post.data.title} ${post.data.description}`.toLowerCase()}
 					>
-						<a href={`/blog/${post.slug}/`}>
+						<a href={withBase(`/blog/${post.slug}/`)}>
 							<div class="card-img">
 								<img
 									width={720}
 									height={200}
-									src={post.data.heroImage}
+									src={withBase(post.data.heroImage ?? '/blog-placeholder-1.jpg')}
 									alt={post.data.title}
 									loading="lazy"
 									decoding="async"
@@ -451,8 +451,8 @@ const tagColor = (tag: string): string => {
 					o echa un ojo al código de esta web.
 				</p>
 				<div class="cta-links">
-					<a class="primary" href="/rss.xml">Suscribirme por RSS</a>
-					<a href="/about">Sobre mí</a>
+					<a class="primary" href={withBase('/rss.xml')}>Suscribirme por RSS</a>
+					<a href={withBase('/about')}>Sobre mí</a>
 					<a href="https://github.com/DevStylish/webfolio" target="_blank" rel="noopener">GitHub</a>
 				</div>
 			</section>

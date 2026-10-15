@@ -4,6 +4,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+import { withBase } from "../consts";
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -25,7 +26,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
       '@type': 'BlogPosting',
       headline: title,
       description: description,
-      image: heroImage ? new URL(heroImage, Astro.site).toString() : undefined,
+      image: heroImage ? new URL(withBase(heroImage).replace(/^\//, ''), Astro.site ?? Astro.url).toString() : undefined,
       datePublished: pubDate?.toISOString(),
       dateModified: updatedDate?.toISOString() ?? pubDate?.toISOString(),
       author: {
@@ -119,7 +120,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     <main>
       <article>
         <div class="hero-image">
-          {heroImage && <img width={720} height={360} src={heroImage} alt={title} fetchpriority="high" />}
+          {heroImage && <img width={720} height={360} src={withBase(heroImage)} alt={title} fetchpriority="high" />}
         </div>
         <div class="prose">
           <div class="title">

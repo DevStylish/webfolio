@@ -37,5 +37,3 @@ Desktop.ini
 
 # github - NO ignorar workflows/ (deploy a Pages). Solo ruido local si apareciese.
 .github/*.log
-
-AGENTS.md

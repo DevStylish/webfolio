@@ -2,7 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE_TITLE } from "../consts";
+import { SITE_TITLE, withBase } from "../consts";
 ---
 
 <!doctype html>
@@ -19,7 +19,7 @@ import { SITE_TITLE } from "../consts";
 		<main style="text-align: center; padding: 4em 1em;">
 			<h1>404 — Página no encontrada</h1>
 			<p>La página que buscas no existe o ha sido movida.</p>
-			<p><a href="/">Volver al inicio</a> · <a href="/blog">Ver el blog</a></p>
+			<p><a href={withBase('/')}>Volver al inicio</a> · <a href={withBase('/blog')}>Ver el blog</a></p>
 		</main>
 		<Footer />
 	</body>

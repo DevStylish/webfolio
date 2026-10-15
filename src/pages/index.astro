@@ -2,7 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION, withBase } from "../consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "../components/FormattedDate.astro";
 
@@ -213,8 +213,8 @@ const latest = posts[0];
           más allá del código.
         </p>
         <div class="hero-cta">
-          <a class="primary" href="/about">Conóceme</a>
-          <a href="/blog">Leer el blog</a>
+          <a class="primary" href={withBase('/about')}>Conóceme</a>
+          <a href={withBase('/blog')}>Leer el blog</a>
         </div>
       </section>
 
@@ -241,12 +241,12 @@ const latest = posts[0];
       <section class="section">
         <h2>Explora la web 🧭</h2>
         <div class="cards">
-          <a class="card" href="/about">
+          <a class="card" href={withBase('/about')}>
             <h3>👨🏻‍💻 Sobre mí</h3>
             <p>Experiencia en NTT DATA, Oxigent y más. Formación, capacidades y proyectos.</p>
             <span class="go">Ver perfil →</span>
           </a>
-          <a class="card" href="/blog">
+          <a class="card" href={withBase('/blog')}>
             <h3>✍️ Blog</h3>
             <p>Java, Astro, Kotlin y opiniones del sector. Apuntes reales del día a día.</p>
             <span class="go">Leer posts →</span>
@@ -257,11 +257,11 @@ const latest = posts[0];
       {latest && (
         <section class="section">
           <h2>Última publicación ✨</h2>
-          <a class="latest" href={`/blog/${latest.slug}/`}>
+          <a class="latest" href={withBase(`/blog/${latest.slug}/`)}>
             <img
               width={720}
               height={260}
-              src={latest.data.heroImage}
+              src={withBase(latest.data.heroImage ?? '/blog-placeholder-1.jpg')}
               alt={latest.data.title}
               loading="lazy"
               decoding="async"
