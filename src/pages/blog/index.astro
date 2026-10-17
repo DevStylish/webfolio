@@ -22,6 +22,7 @@ const tagColor = (tag: string): string => {
 		case 'Astro': return 'astro';
 		case 'Opinion Personal': return 'personal';
 		case 'Kotlin': return 'kotlin';
+		case 'OpenCode': return 'opencode';
 		default: return 'default-tag';
 	}
 };
@@ -312,6 +313,7 @@ const tagColor = (tag: string): string => {
 			.astro { background-color: darkviolet; }
 			.personal { background-color: grey; }
 			.kotlin { background-color: violet; }
+			.opencode { background-color: teal; }
 			.default-tag { background-color: rgb(var(--gray)); }
 
 			@media (max-width: 720px) {
